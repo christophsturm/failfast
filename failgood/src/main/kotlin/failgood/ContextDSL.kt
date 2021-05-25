@@ -1,5 +1,7 @@
 package failgood
 
+import kotlin.reflect.KClass
+
 interface ResourcesDSL {
     /**
      * asynchronously create a dependency. This is great for blocking dependencies, like a docker container.
@@ -46,5 +48,17 @@ interface ContextDSL : ResourcesDSL {
      * define a pending test.
      */
     suspend fun pending(behaviorDescription: String, function: TestLambda = {})
+
+    @Deprecated("top level describe should not be used inside the context DSL", level = DeprecationLevel.ERROR)
+    fun describe(subjectDescription: String, disabled: Boolean = false, function: ContextLambda) {
+    }
+
+    @Deprecated("top level describe should not be used inside the context DSL", level = DeprecationLevel.ERROR)
+    fun <T> describe(disabled: Boolean = false, function: ContextLambda) {
+    }
+
+    @Deprecated("top level describe should not be used inside the context DSL", level = DeprecationLevel.ERROR)
+    fun describe(subjectType: KClass<*>, disabled: Boolean = false, function: ContextLambda) {
+    }
 
 }
